@@ -1,43 +1,37 @@
-import { Server } from 'socket.io';
-import http from 'http';
-import express from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import {Server} from "socket.io";
+import http from "http";
+import express from "express";
 
 const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: [process.env.CLIENT_URL],
-        methods: ['GET', 'POST'],
+    cors:{
+        origin:['http://localhost:3000', 'https://chat-app-smoky-two.vercel.app'],
+        methods:['GET', 'POST'],
     },
 });
 
 export const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
-};
+}
 
-const userSocketMap = {}; // { userId -> socketId }
+const userSocketMap = {}; // {userId->socketId}
 
-io.on('connection', (socket) => {
-    const userId = socket.handshake.query.userId;
-    if (userId) {
+
+io.on('connection', (socket)=>{
+    const userId = socket.handshake.query.userId
+    if(userId !== undefined){
         userSocketMap[userId] = socket.id;
-    }
+    } 
 
-    io.emit('getOnlineUsers', Object.keys(userSocketMap));
+    io.emit('getOnlineUsers',Object.keys(userSocketMap));
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', ()=>{
         delete userSocketMap[userId];
-        io.emit('getOnlineUsers', Object.keys(userSocketMap));
-    });
-});
+        io.emit('getOnlineUsers',Object.keys(userSocketMap));
+    })
 
-const port = process.env.PORT || 3000;
-server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+})
 
-export { app, io, server };
+export {app, io, server};
