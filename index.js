@@ -5,7 +5,7 @@ import userRoute from './routes/userRoute.js';
 import messageRoute from './routes/messageRoute.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { app, server } from './socket/socket.js';
+import { server } from './socket/socket.js'; // Only import server
 
 dotenv.config();
 
@@ -21,10 +21,10 @@ app.use(cookieParser());
 
 // CORS Configuration
 app.use(cors({
-    origin: process.env.CLIENT_URL, // Ex: https://chat-app-frontend-rho-swart.vercel.app
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-    credentials: true // Allow cookies and credentials
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
 }));
 
 // Routes
