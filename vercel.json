@@ -11,10 +11,11 @@
       "src": "/(.*)",
       "dest": "/index.js",
       "headers": {
-        "Access-Control-Allow-Origin": "https://chat-app-frontend-rho-swart.vercel.app",
+        "Access-Control-Allow-Origin": "https://chat-app-frontend-hxdu8zm7u-sweat-kamals-projects.vercel.app",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
       }
     }
   ]
 }
+
