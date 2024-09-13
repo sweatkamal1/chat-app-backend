@@ -1,5 +1,3 @@
-// server.js (या आपकी मुख्य सर्वर फ़ाइल)
-
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
@@ -10,7 +8,7 @@ import cors from 'cors';
 
 dotenv.config();
 
-const app = express(); // सुनिश्चित करें कि यह केवल एक बार है
+const app = express(); 
 
 connectDB();
 
