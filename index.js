@@ -5,7 +5,7 @@ import userRoute from './routes/userRoute.js';
 import messageRoute from './routes/messageRoute.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { server } from './socket/socket.js'; // Only import server
+import { app, server } from './socket/socket.js';
 
 dotenv.config();
 
@@ -26,6 +26,11 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }));
+
+// Welcome route
+app.get('/', (req, res) => {
+    res.send('Welcome to Backend');
+});
 
 // Routes
 app.use("/api/v1/user", userRoute);
