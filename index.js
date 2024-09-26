@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const corsOption = {
-    origin: 'https://chat-app-frontend-s2hr.vercel.app',  // Without trailing slash
+    origin: 'https://chat-app-frontend-s2hr.vercel.app',  
     credentials: true
 };
 
