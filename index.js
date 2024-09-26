@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json()); 
 app.use(cookieParser());
 const corsOption={
-    origin:'https://chat-app-frontend-rkij.vercel.app',
+    origin:'https://chat-app-frontend-s2hr.vercel.app',
     credentials:true
 };
 app.use(cors(corsOption)); 
