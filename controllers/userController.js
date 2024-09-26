@@ -7,17 +7,8 @@ export const register = async (req, res) => {
         const { fullName, username, password, confirmPassword, gender } = req.body;
 
         // Validation
-        if (!fullName || !username || !password || !confirmPassword || !gender) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
-
-        // Password validation (at least 6 characters)
-        if (password.length < 6) {
-            return res.status(400).json({ message: "Password must be at least 6 characters long" });
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Passwords do not match" });
+        if (!fullName || !username || !password || !confirmPassword || !gender || password.length < 6 || password !== confirmPassword) {
+            return res.status(400).json({ message: "All fields are required, and passwords must be at least 6 characters and match." });
         }
 
         const existingUser = await User.findOne({ username });
@@ -67,7 +58,6 @@ export const login = async (req, res) => {
         const tokenData = { userId: user._id };
         const token = jwt.sign(tokenData, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 
-        // Use secure cookies in production
         const cookieOptions = {
             maxAge: 1 * 24 * 60 * 60 * 1000,
             httpOnly: true,
@@ -75,7 +65,7 @@ export const login = async (req, res) => {
         };
 
         if (process.env.NODE_ENV === "production") {
-            cookieOptions.secure = true;  // Ensure cookies are sent only over HTTPS
+            cookieOptions.secure = true;
         }
 
         return res.status(200)
@@ -107,9 +97,8 @@ export const getOtherUsers = async (req, res) => {
     try {
         const loggedInUserId = req.userId;
 
-        // Fetch all users except the logged-in user
         const otherUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
-        
+
         return res.status(200).json(otherUsers);
     } catch (error) {
         console.error("Get Other Users Error:", error);
