@@ -6,18 +6,23 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: ['https://chat-app-frontend-s2hr.vercel.app'], // Yahan aapko vercel ki URL daalni hai jab aap production me ho
+        origin: ['http://localhost:3000'],
         methods: ['GET', 'POST'],
     },
 });
 
-const userSocketMap = {}; // {userId -> socketId}
+const userSocketMap = {}; // {userId->socketId}
+
+// Function to get the socket ID of a receiver
+export const getReceiverSocketId = (receiverId) => {
+    return userSocketMap[receiverId];
+}
 
 io.on('connection', (socket) => {
     const userId = socket.handshake.query.userId;
     if (userId !== undefined) {
         userSocketMap[userId] = socket.id;
-    } 
+    }
 
     io.emit('getOnlineUsers', Object.keys(userSocketMap));
 
