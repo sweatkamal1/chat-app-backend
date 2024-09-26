@@ -17,7 +17,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Allowed origins for CORS
-const allowedOrigins = ['https://chat-app-frontend-s2hr.vercel.app', 'https://chat-app-frontend-rkij.vercel.app'];
+const allowedOrigins = [
+  'https://chat-app-frontend-s2hr.vercel.app', 
+  'https://chat-app-frontend-rkij.vercel.app'
+];
 
 // CORS setup with multiple allowed origins
 const corsOptions = {
@@ -45,4 +48,5 @@ app.use("/api/v1/message", messageRoute);
 server.listen(PORT, () => {
   connectDB();
   console.log(`Server listening on port ${PORT}`);
+  console.log("Your chat application is ready");
 });
