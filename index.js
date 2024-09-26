@@ -104,7 +104,7 @@ const server = http.createServer(app); // Create server with express app
 const io = new Server(server, { // Initialize Socket.io
   cors: {
     origin: allowedOrigins,
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   },
 });
