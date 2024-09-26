@@ -1,5 +1,5 @@
-import express from "express"; 
-import dotenv from "dotenv"; 
+import express from "express";
+import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import userRoute from "./routes/userRoute.js";
 import messageRoute from "./routes/messageRoute.js";
@@ -12,25 +12,24 @@ dotenv.config({});
 const PORT = process.env.PORT || 5000;
 
 // middleware
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// CORS setup
 const corsOption = {
-    origin: 'https://chat-app-frontend-s2hr.vercel.app',  
-    credentials: true
+  origin: process.env.CLIENT_URL,  // Use the client URL from .env file
+  credentials: true,
 };
-
-// Handle CORS for all routes and preflight requests
 app.use(cors(corsOption));
-app.options('*', cors(corsOption));  // Handle preflight requests
+app.options('*', cors(corsOption)); // Preflight request handling
 
 // routes
-app.use("/api/v1/user", userRoute); 
+app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 
 // Start the server
 server.listen(PORT, () => {
-    connectDB();
-    console.log(`Server listening on port ${PORT}`);
+  connectDB();
+  console.log(`Server listening on port ${PORT}`);
 });
