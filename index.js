@@ -11,27 +11,25 @@ dotenv.config({});
 
 const PORT = process.env.PORT || 5000;
 
-// middleware
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
 // Allowed origins for CORS
-const allowedOrigins = [
-  'https://chat-app-frontend-s2hr.vercel.app', 
-  'https://chat-app-frontend-rkij.vercel.app'
-];
+const allowedOrigins = ['https://chat-app-frontend-s2hr.vercel.app', 'https://chat-app-frontend-rkij.vercel.app'];
 
 // CORS setup with multiple allowed origins
 const corsOptions = {
   origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
+    // If the request comes from an allowed origin or there's no origin (for non-browser requests)
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
+  credentials: true, // Allow credentials (cookies, auth headers)
 };
 
 // Apply CORS options to your express app
@@ -40,7 +38,7 @@ app.use(cors(corsOptions));
 // Preflight request handling for all routes
 app.options('*', cors(corsOptions));
 
-// routes
+// Routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/message", messageRoute);
 
@@ -48,5 +46,4 @@ app.use("/api/v1/message", messageRoute);
 server.listen(PORT, () => {
   connectDB();
   console.log(`Server listening on port ${PORT}`);
-  console.log("Your chat application is ready");
 });
