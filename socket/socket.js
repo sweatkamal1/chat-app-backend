@@ -46,7 +46,10 @@ const io = new Server(server, {
     cors: {
         origin: ['https://chat-app-frontend-s2hr.vercel.app'], 
         methods: ['GET', 'POST'],
+        credentials: true, // Cookies, auth headers allow करने के लिए
+        transports: ['websocket', 'polling'] // WebSocket और polling दोनों allow करो
     },
+    allowEIO3: true, // अगर Socket.IO version mismatch हो तो इसे enable करो
 });
 
 const userSocketMap = {}; // {userId->socketId}
