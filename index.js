@@ -75,15 +75,15 @@
 
 
 
-const express = require('express');
-const dotenv = require('dotenv');
-const connectDB = require('./config/database.js');
-const userRoute = require('./routes/userRoute.js');
-const messageRoute = require('./routes/messageRoute.js');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const http = require('http');
-const { Server } = require('socket.io');
+import express from 'express';
+import dotenv from 'dotenv';
+import connectDB from './config/database.js';
+import userRoute from './routes/userRoute.js';
+import messageRoute from './routes/messageRoute.js';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import http from 'http';
+import { Server } from 'socket.io';
 
 // Load environment variables
 dotenv.config();
@@ -105,6 +105,7 @@ const allowedOrigins = [
   'https://chat-app-frontend-rkij.vercel.app',
   'http://localhost:3000' // For local development
 ];
+
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -115,6 +116,7 @@ const corsOptions = {
   },
   credentials: true, // Allow credentials like cookies
 };
+
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
@@ -153,3 +155,4 @@ io.on('connection', (socket) => {
 
   // Add more socket event handlers as needed
 });
+
